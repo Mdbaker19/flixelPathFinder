@@ -1,0 +1,79 @@
+{
+  "name": "path",
+  "ogmoVersion": "3.4.0",
+  "levelPaths": ["."],
+  "backgroundColor": "#282c34ff",
+  "gridColor": "#3c4049cc",
+  "anglesRadians": true,
+  "directoryDepth": 5,
+  "layerGridDefaultSize": {"x": 10, "y": 10},
+  "levelDefaultSize": {"x": 320, "y": 240},
+  "levelMinSize": {"x": 640, "y": 360},
+  "levelMaxSize": {"x": 640, "y": 360},
+  "levelValues": [],
+  "defaultExportMode": ".json",
+  "compactExport": false,
+  "externalScript": "",
+  "playCommand": "",
+  "entityTags": [],
+  "layers": [
+    {
+      "definition": "tile",
+      "name": "path",
+      "gridSize": {"x": 40, "y": 60},
+      "exportID": "60168635",
+      "exportMode": 0,
+      "arrayMode": 1,
+      "defaultTileset": "pathTiles"
+    },
+    {
+      "definition": "entity",
+      "name": "entity",
+      "gridSize": {"x": 10, "y": 10},
+      "exportID": "60165390",
+      "requiredTags": [],
+      "excludedTags": []
+    }
+  ],
+  "entities": [
+    {
+      "exportID": "60160052",
+      "name": "player",
+      "limit": -1,
+      "size": {"x": 40, "y": 60},
+      "origin": {"x": 0, "y": 0},
+      "originAnchored": true,
+      "shape": {
+        "label": "Rectangle",
+        "points": [
+          {"x": -1, "y": -1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": 1}
+        ]
+      },
+      "color": "#ff0000ff",
+      "tileX": false,
+      "tileY": false,
+      "tileSize": {"x": 40, "y": 60},
+      "resizeableX": false,
+      "resizeableY": false,
+      "rotatable": false,
+      "rotationDegrees": 360,
+      "canFlipX": false,
+      "canFlipY": false,
+      "canSetColor": false,
+      "hasNodes": false,
+      "nodeLimit": 0,
+      "nodeDisplay": 0,
+      "nodeGhost": true,
+      "tags": [],
+      "values": []
+    }
+  ],
+  "tilesets": [
+    {"label": "pathTiles", "path": "../images/pathTiles.png", "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAA8CAYAAACtrX6oAAAA4ElEQVR4Xu3RMQGAMBAEQaIXaxGBAyRBFwPTfLFT3dW7ruGevb9zBnrv++yJ1llDFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdgUGBUYFdj8bawcXGD+hMUAAAAASUVORK5CYIIA", "tileWidth": 40, "tileHeight": 60, "tileSeparationX": 0, "tileSeparationY": 0, "tileMarginX": 0, "tileMarginY": 0}
+  ]
+}

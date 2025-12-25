@@ -1,0 +1,43 @@
+{
+  "ogmoVersion": "3.4.0",
+  "width": 640,
+  "height": 360,
+  "offsetX": 0,
+  "offsetY": 0,
+  "layers": [
+    {
+      "name": "path",
+      "_eid": "60168635",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 40,
+      "gridCellHeight": 60,
+      "gridCellsX": 16,
+      "gridCellsY": 6,
+      "tileset": "pathTiles",
+      "data2D": [
+        [-1, 1, -1, 1, 1, -1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1],
+        [-1, 1, -1, -1, 2, -1, 1, 1, 1, 2, 2, 2, 2, 1, -1, -1],
+        [-1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, -1, 1],
+        [-1, -1, -1, 2, -1, -1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1],
+        [-1, -1, -1, 1, -1, -1, 2, 2, 1, -1, -1, -1, -1, -1, -1, -1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      ],
+      "exportMode": 0,
+      "arrayMode": 1
+    },
+    {
+      "name": "entity",
+      "_eid": "60165390",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 10,
+      "gridCellHeight": 10,
+      "gridCellsX": 64,
+      "gridCellsY": 36,
+      "entities": [
+        {"name": "player", "id": 0, "_eid": "60160052", "x": 250, "y": 300, "originX": 0, "originY": 0}
+      ]
+    }
+  ]
+}

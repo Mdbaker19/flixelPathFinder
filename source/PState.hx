@@ -108,7 +108,7 @@ class PState extends FlxState
 			// trace('CHECKING INDEX: ${i} AT: ${ySpot} FOR SOLID');
 			var tileData: FlxTile = pathTiles.getTileDataAt(point.x, ySpot);
 			debugSprites.add(debugSprite(point.x, ySpot));
-			if (tileData != null && tileData.solid || (tileData.index == 4 && tileData.index != 3)) {
+			if (tileData != null && tileData.solid && tileData.index != 3 || tileData.index == 4) {
 				// trace('SOLID: ${tileData.solid} AT X: ${tileData.x} Y: ${tileData.y}');
                 // Is rope - allow move to top of rope
 				return new FlxPoint(point.x + pt.width / 2, ySpot - p.height);

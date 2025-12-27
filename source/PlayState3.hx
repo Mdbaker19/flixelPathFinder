@@ -1,8 +1,11 @@
 package;
 
+import flixel.util.FlxColor;
+import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
 
-class PlayState2 extends PState
+class PlayState3 extends PState
 {
 
 	override public function create()
@@ -19,7 +22,11 @@ class PlayState2 extends PState
 		pathTiles.setTileProperties(3, ANY);
 		pathTiles.setTileProperties(4, NONE);
 
-		add(pathTiles);
+        var bg: FlxSprite = new FlxSprite();
+        bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.GRAY);
+        add(bg);
+
+        placeMyStuff();
 
 		addP();
 

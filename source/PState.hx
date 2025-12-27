@@ -18,12 +18,17 @@ class PState extends FlxState
     var speed: Float = 220;
 	var ground: FlxSprite;
 	var debugSprites: FlxTypedGroup<FlxSprite>;
-	var p: FlxSprite;
+	
+    var p: FlxSprite;
+    var pPathPoint: FlxPoint;
 	var pCanGoUp: Bool;
 	var pt: FlxSprite;
+
 	var tiles: FlxTilemap;
 	var pathTiles: FlxTilemap;
 	var map:FlxOgmo3Loader;
+
+    var mySpritesOnMap: FlxTypedGroup<FlxSprite>;
 
 	override public function create()
 	{
@@ -36,8 +41,10 @@ class PState extends FlxState
 		add(ground);
 
 		debugSprites = new FlxTypedGroup<FlxSprite>();
+        mySpritesOnMap = new FlxTypedGroup<FlxSprite>();
 
 		p = new FlxSprite();
+        pPathPoint = new FlxPoint();
 		p.makeGraphic(24, 59, FlxColor.RED);
 
 		pt = new FlxSprite();
@@ -51,7 +58,10 @@ class PState extends FlxState
 	}
 
     function addP(): Void {
+        #if FLX_DEBUG
 		add(debugSprites);
+        #end
+        add(mySpritesOnMap);
         add(pt);
         add(p);
 		map.loadEntities(placeEntities, "entity");
@@ -75,10 +85,15 @@ class PState extends FlxState
 			var clickedPoint: FlxPoint = pathTiles.getTilePosAt(FlxG.mouse.x, FlxG.mouse.y);
 			var targetPoint: FlxPoint = findTheGroudBelow(clickedPoint);
 			// trace('CLICKED POINT: ${clickedPoint} RETURNED POINT: ${targetPoint}');
-			pt.setPosition(targetPoint.x - pt.width / 2, targetPoint.y);
+			pt.setPosition(targetPoint.x - pt.width / 2, targetPoint.y + (pathTiles.tileHeight / 2) - pt.height - 2);
 			pt.visible = true;
 			var path: FlxPath = new FlxPath();
-			var paths: Array<FlxPoint> = pathTiles.findPath(p.getMidpoint(), targetPoint, LINE, NONE);
+            pPathPoint = new FlxPoint(
+                p.getMidpoint().x,
+                p.y + (p.height * 0.8)
+            );
+            // pPathPoint = p.getMidpoint();
+			var paths: Array<FlxPoint> = pathTiles.findPath(pPathPoint, targetPoint, LINE, NONE);
 			if (paths != null) {
 				path.nodes = paths;
 				p.path = path;
@@ -86,10 +101,15 @@ class PState extends FlxState
 			}
 		}
 
-		if (FlxG.overlap(p, pt)) {
+		if (FlxG.overlap(p, pt, null, verifyOnTarget)) {
 			clearPath();
 		}
 	}
+
+    function verifyOnTarget(p: FlxSprite, pt: FlxSprite): Bool {
+        if (p.y + p.height + 1 > pt.y + pt.height) return true;
+        return false;
+    }
 
     function clearPath(): Void {
         pt.visible = false;
@@ -111,12 +131,51 @@ class PState extends FlxState
 			if (tileData != null && tileData.solid && tileData.index != 3 || tileData.index == 4) {
 				// trace('SOLID: ${tileData.solid} AT X: ${tileData.x} Y: ${tileData.y}');
                 // Is rope - allow move to top of rope
-				return new FlxPoint(point.x + pt.width / 2, ySpot - p.height);
+				return new FlxPoint(point.x + pt.width / 2, ySpot - (p.height / 2));
 			}
 		}
 		// must have over shot
-		return new FlxPoint(point.x + pt.width / 2, FlxG.height - p.height);
+		return new FlxPoint(point.x + pt.width / 2, FlxG.height - (p.height / 2));
 	}
+
+
+    // place my sprites on top
+    // need to know:
+    // tile width
+    // width of my sprite - i.e the rope
+    //.       center it out width wise flag and always placed at top height spot
+    // requires: all my sprites for map to be minimum, same height.
+    // maybe take a widthDiffs array? [0: 0] in this case and [4: 12] or something if rope at 
+    // tile 4 was 12pixels thinner requiring a 6px offset in both dirs
+    function placeMyStuff(): Void {
+        for (c in 0...pathTiles.heightInTiles) {
+            for (r in 0...pathTiles.widthInTiles) {
+                var tileData: FlxTile = pathTiles.getTileData(r, c);
+                if (tileData != null) {
+                    trace(tileData.index);
+                    if (tileData.index == 0) {
+                        // getcolumnpos and rowpos is just way tf off
+                        var ySpot: Float = c * tileData.height;
+                        var xSpot: Float = r * tileData.width;
+                        var s: FlxSprite = new FlxSprite(xSpot, ySpot);
+                        s.makeGraphic(Std.int(tileData.width), Std.int(tileData.height), FlxColor.CYAN);
+                        mySpritesOnMap.add(s);
+                    }
+                     else if (tileData.index == 4) {
+                        // getcolumnpos and rowpos is just way tf off
+                        var ySpot: Float = c * tileData.height;
+                        var xSpot: Float = r * tileData.width;
+                        var s: FlxSprite = new FlxSprite(xSpot + 6, ySpot);
+                        s.makeGraphic(Std.int(tileData.width - 12), Std.int(tileData.height), 0xF67AC80C);
+                        mySpritesOnMap.add(s);
+                    }
+                } else {
+                    // I do not understand why this hits 'sometimes'
+                    trace('Null at C${c} | R${r}');
+                }
+            }
+        }
+    }
 
 	function debugSprite(x: Float, y: Float): FlxSprite {
 		var s: FlxSprite = new FlxSprite(x, y);
